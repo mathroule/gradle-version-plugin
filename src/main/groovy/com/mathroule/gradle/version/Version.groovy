@@ -20,6 +20,11 @@ class Version {
         if (versionFile.exists()) {
             return versionFile.text
         }
+
+        versionFile = new File('../../VERSION')
+        if (versionFile.exists()) {
+            return versionFile.text
+        }
     }
 
     static def getVersionName(File file) {
