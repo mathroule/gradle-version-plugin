@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 
-import static org.junit.jupiter.api.AssertEquals.assertEquals
-import static org.junit.jupiter.api.AssertTrue.assertTrue
+import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertTrue
 
 class GradleVersionPluginTest extends AbstractVersionTest {
 
     private Project project
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         super.setUp()
 
         File file = new File('VERSION')
@@ -26,7 +26,7 @@ class GradleVersionPluginTest extends AbstractVersionTest {
     }
 
     @AfterEach
-    public void versionPlugin_addBumpVersionTasks_toProject() {
+    void versionPlugin_addBumpVersionTasks_toProject() {
         assertTrue(project.tasks.bumpVersion instanceof BumpVersionTask)
         assertTrue(project.tasks.bumpPatchVersion instanceof BumpPatchVersionTask)
         assertTrue(project.tasks.bumpMinorVersion instanceof BumpMinorVersionTask)
@@ -34,12 +34,12 @@ class GradleVersionPluginTest extends AbstractVersionTest {
     }
 
     @Test
-    public void versionPlugin_addGetVersionCodeExtension_toProject() {
+    void versionPlugin_addGetVersionCodeExtension_toProject() {
         assertEquals(1020399, project.extensions.findByName('versionPluginCode'))
     }
 
     @Test
-    public void versionPlugin_addGetVersionNameExtension_toProject() {
+    void versionPlugin_addGetVersionNameExtension_toProject() {
         assertEquals('1.2.3', project.extensions.findByName('versionPluginName'))
     }
 }

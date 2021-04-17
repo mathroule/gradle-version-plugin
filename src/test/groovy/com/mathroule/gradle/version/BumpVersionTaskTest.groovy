@@ -4,16 +4,16 @@ import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.Test
 
-import static org.junit.jupiter.api.AssertTrue.assertTrue
-import static org.junit.jupiter.api.AssertEquals.assertEquals
-import static org.junit.jupiter.api.AssertFalse.assertFalse
+import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertFalse
+import static org.junit.jupiter.api.Assertions.assertTrue
 
 class BumpVersionTaskTest extends AbstractVersionTest {
 
     private static String DEFAULT_FILENAME = 'VERSION'
 
     @Test
-    public void canAddTasksToProject() {
+    void canAddTasksToProject() {
         Project project = ProjectBuilder.builder().build()
 
         def bumpVersionTask = project.task('bumpVersion', type: BumpVersionTask)
@@ -30,7 +30,7 @@ class BumpVersionTaskTest extends AbstractVersionTest {
     }
 
     @Test
-    public void bumpVersion() {
+    void bumpVersion() {
         checkWithFile(TASKS[0], '0.0.0', '0.0.1')
         checkWithFile(TASKS[0], '0.0.1', '0.0.2')
         checkWithFile(TASKS[1], '0.0.0', '0.0.1')
@@ -42,7 +42,7 @@ class BumpVersionTaskTest extends AbstractVersionTest {
     }
 
     @Test
-    public void bumpVersion_withInvalidVersion() {
+    void bumpVersion_withInvalidVersion() {
         checkWithInvalidVersionFile('invalid')
         checkWithInvalidVersionFile('a.b.c')
         checkWithInvalidVersionFile('1.b.c')
@@ -51,37 +51,37 @@ class BumpVersionTaskTest extends AbstractVersionTest {
     }
 
     @Test
-    public void bumpVersion_withInvalidMajorVersion() {
+    void bumpVersion_withInvalidMajorVersion() {
         checkWithInvalidVersionFile('a.1.1')
     }
 
     @Test
-    public void bumpVersion_withInvalidMinorVersion() {
+    void bumpVersion_withInvalidMinorVersion() {
         checkWithInvalidVersionFile('1.a.1')
     }
 
     @Test
-    public void bumpVersion_withInvalidPatchVersion() {
+    void bumpVersion_withInvalidPatchVersion() {
         checkWithInvalidVersionFile('1.1.a')
     }
 
     @Test
-    public void bumpVersion_withNegativeMajor() {
+    void bumpVersion_withNegativeMajor() {
         checkWithInvalidVersionFile('-1.2.3')
     }
 
     @Test
-    public void bumpVersion_withNegativeMinor() {
+    void bumpVersion_withNegativeMinor() {
         checkWithInvalidVersionFile('1.-2.3')
     }
 
     @Test
-    public void bumpVersion_withNegativePatch() {
+    void bumpVersion_withNegativePatch() {
         checkWithInvalidVersionFile('1.2.-3')
     }
 
     @Test
-    public void bumpVersion_withMinor99AndPatch99() {
+    void bumpVersion_withMinor99AndPatch99() {
         checkWithFile(TASKS[0], '0.99.99', '1.0.0')
         checkWithFile(TASKS[1], '0.99.99', '1.0.0')
         checkWithFile(TASKS[2], '0.99.99', '1.0.0')
@@ -89,7 +89,7 @@ class BumpVersionTaskTest extends AbstractVersionTest {
     }
 
     @Test
-    public void bumpVersion_withMinor99() {
+    void bumpVersion_withMinor99() {
         checkWithFile(TASKS[0], '0.99.0', '1.0.0')
         checkWithFile(TASKS[1], '0.99.0', '1.0.0')
         checkWithFile(TASKS[2], '0.99.0', '1.0.0')
@@ -97,7 +97,7 @@ class BumpVersionTaskTest extends AbstractVersionTest {
     }
 
     @Test
-    public void bumpVersion_withPatch99() {
+    void bumpVersion_withPatch99() {
         checkWithFile(TASKS[0], '0.0.99', '0.1.0')
         checkWithFile(TASKS[1], '0.0.99', '0.1.0')
         checkWithFile(TASKS[2], '0.0.99', '0.1.0')
@@ -105,7 +105,7 @@ class BumpVersionTaskTest extends AbstractVersionTest {
     }
 
     @Test
-    public void bumpVersion_withoutFile() {
+    void bumpVersion_withoutFile() {
         checkWithoutFile(TASKS[0], '0.0.1')
         checkWithoutFile(TASKS[1], '0.0.1')
         checkWithoutFile(TASKS[2], '0.1.0')
@@ -113,7 +113,7 @@ class BumpVersionTaskTest extends AbstractVersionTest {
     }
 
     @Test
-    public void bumpVersion_withProperty() {
+    void bumpVersion_withProperty() {
         checkWithFileAndBump(TASKS[0], '', '0.1.2', '0.1.3')
         checkWithFileAndBump(TASKS[0], 'invalid', '0.1.2', '0.1.3')
         checkWithFileAndBump(TASKS[0], 'patch', '0.1.2', '0.1.3')

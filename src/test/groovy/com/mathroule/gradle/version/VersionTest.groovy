@@ -2,9 +2,9 @@ package com.mathroule.gradle.version
 
 import org.junit.jupiter.api.Test
 
-import static org.junit.jupiter.api.AssertEquals.assertEquals
-import static org.junit.jupiter.api.AssertNull.assertNull
-import static org.junit.jupiter.api.AssertThrows.assertThrows
+import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertNull
+import static org.junit.jupiter.api.Assertions.assertThrows
 
 class VersionTest extends AbstractVersionTest {
 
@@ -55,56 +55,56 @@ class VersionTest extends AbstractVersionTest {
 
     @Test
     void getVersionCode_withoutFile() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Throwable throwable = assertThrows(IllegalArgumentException.class, () -> {
             Version.getVersionCode()
         })
 
-        assertEquals("Version should not be empty", exception.getMessage())
+        assertEquals("Version should not be empty", throwable.getMessage())
     }
 
     @Test
     void generateVersionCode_withNegativeMajor() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Throwable throwable = assertThrows(IllegalArgumentException.class, () -> {
             Version.generateVersionCode("-1.1.3")
         })
 
-        assertEquals("Version '-1.1.3' does not match pattern", exception.getMessage())
+        assertEquals("Version '-1.1.3' does not match pattern", throwable.getMessage())
     }
 
     @Test
     void generateVersionCode_withMinor100() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Throwable throwable = assertThrows(IllegalArgumentException.class, () -> {
             Version.generateVersionCode("1.100.3")
         })
 
-        assertEquals("Minor version '100' should be greater than 0 and lower than 100", exception.getMessage())
+        assertEquals("Minor version '100' should be greater than 0 and lower than 100", throwable.getMessage())
     }
 
     @Test
     void generateVersionCode_withNegativeMinor() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Throwable throwable = assertThrows(IllegalArgumentException.class, () -> {
             Version.generateVersionCode("1.-1.3")
         })
 
-        assertEquals("Version '1.-1.3' does not match pattern", exception.getMessage())
+        assertEquals("Version '1.-1.3' does not match pattern", throwable.getMessage())
     }
 
     @Test
     void generateVersionCode_withPatch100() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Throwable throwable = assertThrows(IllegalArgumentException.class, () -> {
             Version.generateVersionCode("1.2.100")
         })
 
-        assertEquals("Patch version '100' should be greater than 0 and lower than 100", exception.getMessage())
+        assertEquals("Patch version '100' should be greater than 0 and lower than 100", throwable.getMessage())
     }
 
     @Test
     void generateVersionCode_withNegativePatch() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Throwable throwable = assertThrows(IllegalArgumentException.class, () -> {
             Version.generateVersionCode("1.2.-1")
         })
 
-        assertEquals("Version '1.2.-1' does not match pattern", exception.getMessage())
+        assertEquals("Version '1.2.-1' does not match pattern", throwable.getMessage())
     }
 
     @Test
@@ -142,19 +142,19 @@ class VersionTest extends AbstractVersionTest {
 
     @Test
     void generateVersionCode_withRC99() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Throwable throwable = assertThrows(IllegalArgumentException.class, () -> {
             Version.generateVersionCode("0.0.0-RC99")
         })
 
-        assertEquals("Release '99' should be greater than 0 and lower than 99", exception.getMessage())
+        assertEquals("Release '99' should be greater than 0 and lower than 99", throwable.getMessage())
     }
 
     @Test
     void generateVersionCode_withNegativeRC() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        Throwable throwable = assertThrows(IllegalArgumentException.class, () -> {
             Version.generateVersionCode("1.2.3-RC-1")
         })
 
-        assertEquals("Version '1.2.3-RC-1' does not match pattern", exception.getMessage())
+        assertEquals("Version '1.2.3-RC-1' does not match pattern", throwable.getMessage())
     }
 }
