@@ -3,10 +3,6 @@ plugins {
     id 'maven-publish'
 }
 
-repositories {
-    mavenCentral()
-}
-
 group 'com.mathroule'
 version '1.0.1'
 
