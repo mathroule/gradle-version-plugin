@@ -1,5 +1,7 @@
 # Gradle Version Plugin
 
+[![](https://jitpack.io/v/mathroule/gradle-version-plugin.svg)](https://jitpack.io/#mathroule/gradle-version-plugin)
+
 A Gradle plugin manage maven style version and generate corresponding version code.
 
 Task usage
