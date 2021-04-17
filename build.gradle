@@ -1,6 +1,5 @@
 plugins {
     id 'groovy'
-    id 'maven'
 }
 
 repositories {
@@ -8,14 +7,14 @@ repositories {
 }
 
 group 'com.mathroule'
-version '1.0.0'
+version '1.0.1'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile gradleApi()
-    compile localGroovy()
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation gradleApi()
+    implementation localGroovy()
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 }
