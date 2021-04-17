@@ -38,7 +38,7 @@ class Version {
             throw new IllegalArgumentException("Version should not be empty")
         }
 
-        // TODO check with regex checkVersionPattern version
+        checkVersionPattern version
 
         def candidate = 99
         def (major, minor, patch) = version.toLowerCase().replaceAll('-', '').tokenize('.')
@@ -55,45 +55,43 @@ class Version {
         }
 
         (major, minor, patch, candidate) = [major, minor, patch, candidate].collect {
-            it.toInteger()
+            it as int
         }
 
-        // println "major: " + major + " minor: " + minor + " patch: " + patch + " candidate: " + candidate
+        checkMajorVersion major as int
+        checkMinorVersion minor as int
+        checkPatchVersion patch as int
 
-        checkMajorVersion major
-        checkVersion minor
-        checkVersion patch
-
-        return build(major, minor, patch, candidate);
+        build(major, minor, patch, candidate)
     }
 
-    private static def checkVersionPattern(version) {
-        if (version =~ /[0-9]+\.[0.9]+\.[0.9]/) {
-            throw new IllegalArgumentException()
-        }
-    }
-
-    static def checkVersion(version) {
-        if (false) {
-            throw new IllegalArgumentException()
+    static def checkVersionPattern(version) {
+        if (!(version =~ /^(\d+\.)?(\d+\.)?(\*|\d+)(-+\w+\d*)?$/)) {
+            throw new IllegalArgumentException("Version '$version' does not match pattern")
         }
     }
 
     static def checkMajorVersion(int version) {
         if (version < 0) {
-            throw new IllegalArgumentException("Major version should be greater than 0")
+            throw new IllegalArgumentException("Major version '$version' should be greater than 0")
         }
     }
 
-    static def checkVersion(int version) {
+    static def checkMinorVersion(int version) {
         if (version < 0 || 99 < version) {
-            throw new IllegalArgumentException("Version should be greater than 0 and lower than 100")
+            throw new IllegalArgumentException("Minor version '$version' should be greater than 0 and lower than 100")
+        }
+    }
+
+    static def checkPatchVersion(int version) {
+        if (version < 0 || 99 < version) {
+            throw new IllegalArgumentException("Patch version '$version' should be greater than 0 and lower than 100")
         }
     }
 
     private static def checkRelease(int patch) {
         if (patch < 0 || 99 <= patch) {
-            throw new IllegalArgumentException("Release should be greater than 0 and lower than 99")
+            throw new IllegalArgumentException("Release '$patch' should be greater than 0 and lower than 99")
         }
     }
 

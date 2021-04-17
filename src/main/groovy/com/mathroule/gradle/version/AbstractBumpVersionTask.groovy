@@ -77,7 +77,7 @@ abstract class AbstractBumpVersionTask extends DefaultTask {
         if (!versionFile.exists()) {
             versionFile.createNewFile()
             versionFile.text = initVersion
-            println("Version init with " + versionFile.text)
+            println("Version init with $versionFile.text")
             return null
         }
 
@@ -86,18 +86,18 @@ abstract class AbstractBumpVersionTask extends DefaultTask {
 
     static extractVersion(File versionFile) {
         def version = versionFile.text
-        Version.checkVersion(version)
+        Version.checkVersionPattern version
 
         def versionTokens = version.tokenize('.').toArray()
 
         def major = versionTokens[0] as int
-        Version.checkMajorVersion(major)
+        Version.checkMajorVersion major
 
         def minor = versionTokens[1] as int
-        Version.checkVersion(minor)
+        Version.checkMinorVersion minor
 
         def patch = versionTokens[2] as int
-        Version.checkVersion(patch)
+        Version.checkPatchVersion patch
 
         [major, minor, patch]
     }
@@ -105,7 +105,7 @@ abstract class AbstractBumpVersionTask extends DefaultTask {
     static saveVersion(File versionFile, String version) {
         def oldVersion = versionFile.text
         versionFile.text = version
-        println("Version bumped from " + oldVersion + " to " + version)
+        println("Version bumped from $oldVersion to $version")
     }
 
     static getVersion(int major, int minor, int patch) {

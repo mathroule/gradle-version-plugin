@@ -1,15 +1,15 @@
 package com.mathroule.gradle.version
 
-import org.junit.Ignore
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
-import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertNull
+import static org.junit.jupiter.api.AssertEquals.assertEquals
+import static org.junit.jupiter.api.AssertNull.assertNull
+import static org.junit.jupiter.api.AssertThrows.assertThrows
 
-public class VersionTest extends AbstractVersionTest {
+class VersionTest extends AbstractVersionTest {
 
     @Test
-    public void getVersionName() {
+    void getVersionName() {
         File file = new File('VERSION')
         file.createNewFile()
         file.text = '1.2.3'
@@ -17,7 +17,7 @@ public class VersionTest extends AbstractVersionTest {
     }
 
     @Test
-    public void getVersionName_withParentFile() {
+    void getVersionName_withParentFile() {
         File file = new File('../VERSION')
         file.createNewFile()
         file.text = '2.0.6'
@@ -25,7 +25,7 @@ public class VersionTest extends AbstractVersionTest {
     }
 
     @Test
-    public void getVersionName_withFile() {
+    void getVersionName_withFile() {
         File file = new File('CUSTOM_VERSION')
         file.createNewFile()
         file.text = '3.4.5'
@@ -33,12 +33,12 @@ public class VersionTest extends AbstractVersionTest {
     }
 
     @Test
-    public void getVersionName_withoutFile() {
+    void getVersionName_withoutFile() {
         assertNull(Version.getVersionName())
     }
 
     @Test
-    public void getVersionCode() {
+    void getVersionCode() {
         File file = new File('VERSION')
         file.createNewFile()
         file.text = '1.2.3'
@@ -46,48 +46,69 @@ public class VersionTest extends AbstractVersionTest {
     }
 
     @Test
-    public void getVersionCode_withFile() {
+    void getVersionCode_withFile() {
         File file = new File('CUSTOM_VERSION')
         file.createNewFile()
         file.text = '3.4.5'
         assertEquals(3040599, Version.getVersionCode(file))
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void getVersionCode_withoutFile() {
-        assertNull(Version.getVersionCode())
-    }
+    @Test
+    void getVersionCode_withoutFile() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Version.getVersionCode()
+        })
 
-    @Test(expected = IllegalArgumentException.class)
-    @Ignore
-    public void generateVersionCode_withNegativeMajor() {
-        Version.generateVersionCode("-1.1.3")
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void generateVersionCode_withMinor100() {
-        Version.generateVersionCode("1.100.3")
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    @Ignore
-    public void generateVersionCode_withNegativeMinor() {
-        Version.generateVersionCode("1.-1.3")
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void generateVersionCode_withPatch100() {
-        Version.generateVersionCode("1.2.100")
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    @Ignore
-    public void generateVersionCode_withNegativePatch() {
-        Version.generateVersionCode("1.2.-1")
+        assertEquals("Version should not be empty", exception.getMessage())
     }
 
     @Test
-    public void generateVersionCode_withFinale() {
+    void generateVersionCode_withNegativeMajor() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Version.generateVersionCode("-1.1.3")
+        })
+
+        assertEquals("Version '-1.1.3' does not match pattern", exception.getMessage())
+    }
+
+    @Test
+    void generateVersionCode_withMinor100() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Version.generateVersionCode("1.100.3")
+        })
+
+        assertEquals("Minor version '100' should be greater than 0 and lower than 100", exception.getMessage())
+    }
+
+    @Test
+    void generateVersionCode_withNegativeMinor() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Version.generateVersionCode("1.-1.3")
+        })
+
+        assertEquals("Version '1.-1.3' does not match pattern", exception.getMessage())
+    }
+
+    @Test
+    void generateVersionCode_withPatch100() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Version.generateVersionCode("1.2.100")
+        })
+
+        assertEquals("Patch version '100' should be greater than 0 and lower than 100", exception.getMessage())
+    }
+
+    @Test
+    void generateVersionCode_withNegativePatch() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Version.generateVersionCode("1.2.-1")
+        })
+
+        assertEquals("Version '1.2.-1' does not match pattern", exception.getMessage())
+    }
+
+    @Test
+    void generateVersionCode_withFinale() {
         assertEquals(99, Version.generateVersionCode("0.0.0"))
         assertEquals(1000099, Version.generateVersionCode("1.0.0"))
         assertEquals(1009999, Version.generateVersionCode("1.0.99"))
@@ -99,44 +120,41 @@ public class VersionTest extends AbstractVersionTest {
     }
 
     @Test
-    public void generateVersionCode_withZero() {
+    void generateVersionCode_withZero() {
         assertEquals(0, Version.generateVersionCode("0.0.0-SNAPSHOT"))
         assertEquals(1, Version.generateVersionCode("0.0.0-RC1"))
         assertEquals(4, Version.generateVersionCode("0.0.0-RC4"))
         assertEquals(99, Version.generateVersionCode("0.0.0"))
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void generateVersionCode_withInvalidCandidate() {
-        Version.generateVersionCode("1.2.3-INVALID")
-    }
-
     @Test
-    public void generateVersionCode_withSnapshot() {
+    void generateVersionCode_withSnapshot() {
         assertEquals(0, Version.generateVersionCode("0.0.0-SNAPSHOT"))
         assertEquals(1020300, Version.generateVersionCode("1.2.3-SNAPSHOT"))
     }
 
     @Test
-    public void generateVersionCode_withRC() {
+    void generateVersionCode_withRC() {
         assertEquals(1, Version.generateVersionCode("0.0.0-RC1"))
         assertEquals(3, Version.generateVersionCode("0.0.0-RC3"))
         assertEquals(1020301, Version.generateVersionCode("1.2.3-RC1"))
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void generateVersionCode_withInvalidRC() {
-        Version.generateVersionCode("0.0.0-RCinvalid")
+    @Test
+    void generateVersionCode_withRC99() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Version.generateVersionCode("0.0.0-RC99")
+        })
+
+        assertEquals("Release '99' should be greater than 0 and lower than 99", exception.getMessage())
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void generateVersionCode_withRC99() {
-        Version.generateVersionCode("0.0.0-RC99")
-    }
+    @Test
+    void generateVersionCode_withNegativeRC() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Version.generateVersionCode("1.2.3-RC-1")
+        })
 
-    @Test(expected = IllegalArgumentException.class)
-    @Ignore
-    public void generateVersionCode_withNegativeRC() {
-        Version.generateVersionCode("1.2.3-RC-1")
+        assertEquals("Version '1.2.3-RC-1' does not match pattern", exception.getMessage())
     }
 }

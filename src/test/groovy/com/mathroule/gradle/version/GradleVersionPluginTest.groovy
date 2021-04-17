@@ -2,17 +2,18 @@ package com.mathroule.gradle.version
 
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 
-import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertTrue
+import static org.junit.jupiter.api.AssertEquals.assertEquals
+import static org.junit.jupiter.api.AssertTrue.assertTrue
 
 class GradleVersionPluginTest extends AbstractVersionTest {
 
     private Project project
 
-    @Before
+    @BeforeEach
     public void setUp() {
         super.setUp()
 
@@ -24,7 +25,7 @@ class GradleVersionPluginTest extends AbstractVersionTest {
         project.pluginManager.apply 'com.mathroule.gradle-version-plugin'
     }
 
-    @Test
+    @AfterEach
     public void versionPlugin_addBumpVersionTasks_toProject() {
         assertTrue(project.tasks.bumpVersion instanceof BumpVersionTask)
         assertTrue(project.tasks.bumpPatchVersion instanceof BumpPatchVersionTask)

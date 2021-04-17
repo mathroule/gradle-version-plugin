@@ -1,14 +1,14 @@
 package com.mathroule.gradle.version
 
-import org.junit.After
-import org.junit.Before
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 
-public class AbstractVersionTest {
+class AbstractVersionTest {
 
     private String version
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
 
         File file = new File('VERSION')
         if (file.exists()) {
@@ -19,8 +19,8 @@ public class AbstractVersionTest {
         new File('../VERSION').delete()
     }
 
-    @After
-    public void tearDown() {
+    @AfterEach
+    void tearDown() {
         File file = new File('VERSION')
         file.createNewFile()
         file.text = version

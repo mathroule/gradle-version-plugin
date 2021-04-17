@@ -2,9 +2,11 @@ package com.mathroule.gradle.version
 
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
-import static org.junit.Assert.*
+import static org.junit.jupiter.api.AssertTrue.assertTrue
+import static org.junit.jupiter.api.AssertEquals.assertEquals
+import static org.junit.jupiter.api.AssertFalse.assertFalse
 
 class BumpVersionTaskTest extends AbstractVersionTest {
 
