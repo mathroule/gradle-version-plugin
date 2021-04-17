@@ -15,3 +15,15 @@ dependencies {
     implementation localGroovy()
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = rootProject.name
+            version = version
+
+            from components.java
+        }
+    }
+}
