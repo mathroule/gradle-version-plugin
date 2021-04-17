@@ -13,7 +13,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.mathroule:gradle-plugin:1.0.2'
+        classpath 'com.mathroule:gradle-plugin:1.0.3'
     }
 }
 
