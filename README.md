@@ -2,7 +2,7 @@
 
 [![](https://jitpack.io/v/mathroule/gradle-version-plugin.svg)](https://jitpack.io/#mathroule/gradle-version-plugin)
 
-A Gradle plugin manage maven style version and generate corresponding version code.
+A Gradle plugin to manage semantic versioning `minor.major.patch` and generate corresponding Java version or Android version name and version code.
 
 Task usage
 ----------
