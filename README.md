@@ -24,7 +24,7 @@ After applying the plugin you'll find `bumpVersion` tasks in your project.
 
 To bump version, use
 ```
-gradle bumpVersion # Shortcut for bumpPatchVersion
+gradle bumpVersion      # Shortcut for bumpPatchVersion
 gradle bumpPatchVersion # Example bump version 1.1.2 to 1.1.3
 gradle bumpMinorVersion # Example bump version 1.1.2 to 1.2.0
 gradle bumpMajorVersion # Example bump version 1.1.2 to 2.0.0
