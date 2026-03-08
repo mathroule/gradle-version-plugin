@@ -4,8 +4,8 @@ plugins {
     id 'maven-publish'
 }
 
-group 'com.mathroule'
-version '1.0.3'
+group = 'com.mathroule'
+version = '1.0.3'
 
 repositories {
     mavenCentral()
