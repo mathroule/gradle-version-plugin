@@ -16,17 +16,21 @@ class BumpVersionTaskTest extends AbstractVersionTest {
     void canAddTasksToProject() {
         Project project = ProjectBuilder.builder().build()
 
-        def bumpVersionTask = project.task('bumpVersion', type: BumpVersionTask)
-        assertTrue(bumpVersionTask instanceof BumpVersionTask)
+        def bumpVersionTask = project.tasks.register('bumpVersion', BumpVersionTask)
+        assertEquals(bumpVersionTask.getName(), 'bumpVersion')
+        assertTrue(bumpVersionTask.get() instanceof BumpVersionTask)
 
-        def bumpPatchVersionTask = project.task('bumpPatchVersion', type: BumpPatchVersionTask)
-        assertTrue(bumpPatchVersionTask instanceof BumpPatchVersionTask)
+        def bumpPatchVersionTask = project.tasks.register('bumpPatchVersion', BumpPatchVersionTask)
+        assertEquals(bumpPatchVersionTask.getName(), 'bumpPatchVersion')
+        assertTrue(bumpPatchVersionTask.get() instanceof BumpPatchVersionTask)
 
-        def bumpMinorVersionTask = project.task('bumpMinorVersionTask', type: BumpMinorVersionTask)
-        assertTrue(bumpMinorVersionTask instanceof BumpMinorVersionTask)
+        def bumpMinorVersionTask = project.tasks.register('bumpMinorVersionTask', BumpMinorVersionTask)
+        assertEquals(bumpMinorVersionTask.getName(), 'bumpMinorVersionTask')
+        assertTrue(bumpMinorVersionTask.get() instanceof BumpMinorVersionTask)
 
-        def bumpMajorVersion = project.task('bumpMajorVersion', type: BumpMajorVersionTask)
-        assertTrue(bumpMajorVersion instanceof BumpMajorVersionTask)
+        def bumpMajorVersion = project.tasks.register('bumpMajorVersion', BumpMajorVersionTask)
+        assertEquals(bumpMajorVersion.getName(), 'bumpMajorVersion')
+        assertTrue(bumpMajorVersion.get() instanceof BumpMajorVersionTask)
     }
 
     @Test
@@ -121,10 +125,12 @@ class BumpVersionTaskTest extends AbstractVersionTest {
         checkWithFileAndBump(TASKS[0], 'major', '0.1.2', '1.0.0')
     }
 
-    private static TASKS = [['bumpVersion', BumpVersionTask],
-                            ['bumpPatchVersion', BumpPatchVersionTask],
-                            ['bumpMinorVersion', BumpMinorVersionTask],
-                            ['bumpMajorVersion', BumpMajorVersionTask]]
+    private static TASKS = [
+            ['bumpVersion', BumpVersionTask],
+            ['bumpPatchVersion', BumpPatchVersionTask],
+            ['bumpMinorVersion', BumpMinorVersionTask],
+            ['bumpMajorVersion', BumpMajorVersionTask]
+    ]
 
     private static void checkWithInvalidVersionFile(String initVersion) {
         for (List taskInfo : TASKS) {
@@ -132,7 +138,7 @@ class BumpVersionTaskTest extends AbstractVersionTest {
             def taskType = taskInfo[1]
             println("test task: " + taskName + " with invalid version: " + initVersion)
             Project project = ProjectBuilder.builder().build()
-            def task = project.task(taskName, type: taskType)
+            def task = project.tasks.register(taskName, taskType).get()
             File file = new File(DEFAULT_FILENAME)
             file.createNewFile()
             file.text = initVersion
@@ -151,7 +157,7 @@ class BumpVersionTaskTest extends AbstractVersionTest {
         def taskType = taskInfo[1]
         println("test task: " + taskName + " with version: " + initVersion + " => " + expectedVersion)
         Project project = ProjectBuilder.builder().build()
-        def task = project.task(taskName, type: taskType)
+        def task = project.tasks.register(taskName, taskType).get()
         File file = new File(DEFAULT_FILENAME)
         file.createNewFile()
         file.text = initVersion
@@ -165,7 +171,7 @@ class BumpVersionTaskTest extends AbstractVersionTest {
         def taskType = taskInfo[1]
         println("test task: " + taskName + " with bump: " + bump + " and version: " + initVersion + " => " + expectedVersion)
         Project project = ProjectBuilder.builder().build()
-        def task = project.task(taskName, type: taskType)
+        def task = project.tasks.register(taskName, taskType).get()
         File file = new File(DEFAULT_FILENAME)
         file.createNewFile()
         file.text = initVersion
@@ -180,7 +186,7 @@ class BumpVersionTaskTest extends AbstractVersionTest {
         def taskType = taskInfo[1]
         println("test task: " + taskName + " init with " + expectedVersion)
         Project project = ProjectBuilder.builder().build()
-        def task = project.task(taskName, type: taskType)
+        def task = project.tasks.register(taskName, taskType).get()
         assertFalse(new File(DEFAULT_FILENAME).exists())
         task."$taskName"()
         assertTrue(new File(DEFAULT_FILENAME).exists())

@@ -1,7 +1,9 @@
 package com.mathroule.gradle.version
 
 import org.gradle.api.DefaultTask
+import org.gradle.work.DisableCachingByDefault
 
+@DisableCachingByDefault(because = "Version bumping tasks modify files and should not be cached to ensure correct version updates.")
 abstract class AbstractBumpVersionTask extends DefaultTask {
 
     AbstractBumpVersionTask() {

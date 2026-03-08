@@ -2,7 +2,9 @@ package com.mathroule.gradle.version
 
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import org.gradle.work.DisableCachingByDefault
 
+@DisableCachingByDefault(because = "Version bumping tasks modify files and should not be cached to ensure correct version updates.")
 class BumpVersionTask extends AbstractBumpVersionTask {
 
     @Input
@@ -26,7 +28,6 @@ class BumpVersionTask extends AbstractBumpVersionTask {
             case 'minor':
                 bumpMinorVersionTask(versionPath)
                 break
-            case 'patch':
             default:
                 bumpPatchVersionTask(versionPath)
         }

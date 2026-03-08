@@ -9,7 +9,6 @@ class AbstractVersionTest {
 
     @BeforeEach
     void setUp() {
-
         File file = new File('VERSION')
         if (file.exists()) {
             version = file.text
