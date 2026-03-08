@@ -1,7 +1,5 @@
 # Gradle Version Plugin
 
-[![](https://jitpack.io/v/mathroule/gradle-version-plugin.svg)](https://jitpack.io/#mathroule/gradle-version-plugin)
-
 A Gradle plugin to manage [semantic versioning](https://semver.org) `minor.major.patch` and generate corresponding Java version or Android version name and version code.
 
 Task usage
@@ -9,11 +7,11 @@ Task usage
 ```groovy
 buildscript {
     repositories {
-        maven { url 'https://jitpack.io' }
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.mathroule:gradle-plugin:1.0.3'
+        classpath 'io.github.mathroule:gradle-plugin:1.0.3'
     }
 }
 
