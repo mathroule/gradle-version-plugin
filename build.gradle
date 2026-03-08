@@ -1,8 +1,8 @@
 plugins {
-    id 'java-gradle-plugin'
     id 'groovy'
+    id 'java-gradle-plugin'
     id 'maven-publish'
-    id 'com.vanniktech.maven.publish' version '0.36.0'
+    alias(libs.plugins.vanniktech.maven.publish)
 }
 
 repositories {
@@ -12,8 +12,9 @@ repositories {
 dependencies {
     implementation gradleApi()
     implementation localGroovy()
-    testImplementation platform(group: 'org.junit', name: 'junit-bom', version: '5.7.1')
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine'
+    testImplementation platform(libs.junit.bom)
+    testImplementation libs.junit.jupiter.engine
+    testRuntimeOnly libs.junit.platform.launcher
 }
 
 java {
