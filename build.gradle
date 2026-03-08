@@ -31,7 +31,7 @@ test {
 }
 
 mavenPublishing {
-    coordinates('io.github.mathroule', 'gradle-version-plugin', '1.0.4')
+    coordinates('io.github.mathroule', 'gradle-version-plugin', '1.0.5')
 
     pom {
         name = 'Gradle Version Plugin'
