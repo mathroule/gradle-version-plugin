@@ -1,11 +1,9 @@
 plugins {
-    id 'groovy'
     id 'java-gradle-plugin'
+    id 'groovy'
     id 'maven-publish'
+    id 'com.vanniktech.maven.publish' version '0.36.0'
 }
-
-group = 'io.github.mathroule'
-version = '1.0.4'
 
 repositories {
     mavenCentral()
@@ -19,8 +17,6 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
@@ -33,14 +29,35 @@ test {
     }
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = group
-            artifactId = rootProject.name
-            version = version
+mavenPublishing {
+    coordinates('io.github.mathroule', 'gradle-version-plugin', '1.0.4')
 
-            from components.java
+    pom {
+        name = 'Gradle Version Plugin'
+        description = 'A Gradle plugin to manage semantic versioning (major.minor.patch) and generate version code and version name.'
+        inceptionYear = '2019'
+        url = 'https://github.com/mathroule/gradle-version-plugin'
+        licenses {
+            license {
+                name = 'MIT License'
+                url = 'https://opensource.org/licenses/MIT'
+            }
+        }
+        developers {
+            developer {
+                id = 'mathroule'
+                name = 'Mathieu Rul'
+                url = "https://github.com/mathroule"
+            }
+        }
+        scm {
+            connection = 'scm:git://github.com/mathroule/gradle-version-plugin.git'
+            developerConnection = 'scm:git://github.com/mathroule/gradle-version-plugin.git'
+            url = 'git://github.com/mathroule/gradle-version-plugin.git'
         }
     }
+
+    publishToMavenCentral()
+
+    signAllPublications()
 }
