@@ -28,7 +28,7 @@ jobs:
       - name: Publish to Maven Central
         run: ./gradlew publishToMavenCentral
         env:
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SERVER_PASSWORD }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SERVER_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.SERVER_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.SERVER_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
