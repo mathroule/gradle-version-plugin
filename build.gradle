@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.mathroule'
+group = 'io.github.mathroule'
 version = '1.0.4'
 
 repositories {
